@@ -1,0 +1,19 @@
+//wap to create union book number of pages,cost,name and read it dynamically and display
+#include<stdio.h>
+#include<string.h>
+union book
+{
+	char name[10];
+	int pages;
+	float cost;
+}b1;
+int main()
+{
+	printf("enter book information:");
+	scanf(" %s%d%f",&b1.name,&b1.pages,&b1.cost);
+	printf("the given information is:");
+	printf("\n book name is: %s",b1.name);
+	printf("\n number of pages is:%d",b1.pages);
+	printf("\n cost of book is:%f",b1.cost);
+	return 0;
+}
