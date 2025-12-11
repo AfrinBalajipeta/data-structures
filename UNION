@@ -1,0 +1,17 @@
+//wap to read numbers of the union dynamically and display it.
+#include<stdio.h>
+#include<string.h>
+union student
+{
+	char name[10];
+	int roll;
+}s1;
+int main()
+{
+	printf("enter student information:");
+	scanf(" %s%d",&s1.name,&s1.roll);
+	printf("the given information is:");
+	printf("\n name is: %s",s1.name);
+	printf("\n roll is:%d",s1.roll);
+	return 0;
+}
