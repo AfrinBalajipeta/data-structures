@@ -1,0 +1,26 @@
+//wap to stor student information by separated structurs
+#include<stdio.h>
+#include<string.h>
+struct date
+{
+	int dd;
+	int mm;
+	int yy;
+};
+struct student
+{
+	char name[10];
+	char roll;
+	struct date d;
+}s;
+int main()
+{
+    printf("enter student information:");
+    printf("\n enter name and roll:");
+    scanf(" %s%d",&s.name,&s.roll);
+    printf("enter date of student:");
+    scanf("%d%d%d",&s.d.dd,&s.d.mm,&s.d.yy);
+    printf("\n student data is:");
+    printf("name is: %s \n roll is:%d\n Dob is %d/%d/%d",s.name,s.roll,s.d.dd,s.d.mm,s.d.yy);
+    return 0;
+}
