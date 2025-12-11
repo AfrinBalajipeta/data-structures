@@ -1,0 +1,139 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node*next;
+} *head=NULL;
+void createlinkedlist()
+{
+	struct node*temp,*ptr;
+	temp=(struct node*)malloc(sizeof(struct node));
+	temp->next=NULL;
+	printf("\n enter data value in node:");
+	scanf("%d",&temp->data);
+	if(head==NULL)
+	{
+		head=temp;
+	}
+	else
+	{
+		ptr=head;
+		while(ptr->next!=NULL)
+		{
+			ptr=ptr->next;
+		}
+		ptr->next=temp;
+	}
+}
+void displaylinkedlist()
+{
+	struct node *ptr;
+	ptr=head;
+	if(ptr==NULL)
+	{
+		printf("\n linked list is empty");
+	}
+	else
+	{
+		while(ptr!=NULL)
+		{
+			printf("%d->",ptr->data);
+			ptr=ptr->next;
+		}
+		printf("NULL");
+	}
+}
+void firstinsert()
+{
+	struct node*temp;
+	temp=(struct node*)malloc(sizeof(struct node));
+	temp->next=NULL;
+	printf("\n enter data in first node:");
+	scanf("%d",&temp->data);
+	temp->next=head;
+	head=temp;
+    printf("\n insert at first node successful");
+}
+void lastinsert()
+{
+	struct node *temp,*ptr;
+	temp=(struct node*)malloc(sizeof(struct node));
+	temp->next=NULL;
+	printf("\n enter data in last node:");
+	scanf("%d",&temp->data);
+	ptr=head;
+	while(ptr->next!=NULL)
+	{
+		ptr=ptr->next;
+	}
+	ptr->next=temp;
+	printf("added node at last of linkedlist successful");
+}
+void anypos_insert()
+{
+	int pos,count=0;
+	struct node *temp,*ptr;
+	if(head==NULL)
+	{
+		printf("\n linkedlist is empty");
+	}
+	while(ptr!=NULL)
+	{
+		count++;
+		ptr=ptr->next;
+	}
+	temp=(struct node*)malloc(sizeof(struct node));
+	temp->next=NULL;
+	printf("\nEnter the data:");
+	scanf("%d",&temp->data);
+	printf("enter the position:");
+	scanf("%d",&pos);
+	if(pos<1||pos>count+1)
+	{
+		printf("\nInvalid pos");
+	}
+	else
+	{
+		ptr=head;
+		if(pos==1)
+		{
+			temp->next=head;
+			head=temp;
+			printf("\n insertion at anypos first is successful");
+		}
+		else
+		{
+			ptr=head;
+			int i;
+			for(i=1;i<pos-1;i++)
+			{
+				ptr=ptr->next;
+			}
+			temp->next=ptr->next;
+			ptr->next=temp;
+			printf("\n insertion at anypos is successful");
+		}
+	}
+}
+int main()
+{
+	int ch;
+	while(1)
+	{
+		printf("\n1.createlinkedlist \n2.display \n3.first_insert \n4.lastinsert \n5.anypos_insert \nenter your choice:" );
+		if(ch==1)
+		createlinkedlist();
+	    else if(ch==2)
+	    displaylinkedlist();
+	    else if(ch==3)
+	    firstinsert();
+	    else if(ch==4)
+	    lastinsert();
+	    else if(ch==5)
+	    anypos_insert();
+	    else if(ch==6)
+	    break;
+	    else
+	    printf("wrong choice entered:");
+	}
+}
