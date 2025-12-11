@@ -1,0 +1,57 @@
+#include <stdio.h>
+void quick_sort(int a[], int i, int j);
+int partition(int a[], int i, int j);
+void quick_sort(int a[], int i, int j)
+{
+    int pos;
+    if (i < j)
+    {
+        pos = partition(a, i, j);
+        quick_sort(a, i, pos - 1);
+        quick_sort(a, pos + 1, j);
+    }
+}
+int partition(int a[], int i, int j)
+{
+    int pivot = a[i];
+    int start = i;
+    int end = j;
+    while (start < end)
+    {
+        while (a[start] <= pivot && start < j)
+        {
+            start++;
+        }
+        while (a[end] > pivot)
+        {
+            end--;
+        }
+        if (start < end)
+        {
+            int temp = a[start];
+            a[start] = a[end];
+            a[end] = temp;
+        }
+    }
+    a[i] = a[end];
+    a[end] = pivot;
+    return end;
+}
+int main()
+{
+    int i, n, a[25];
+    printf("Size of array: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+    }
+    quick_sort(a, 0, n - 1);
+    printf("Sorted elements: ");
+    for (i = 0; i < n; i++)
+    {
+        printf("%d ", a[i]);
+    }
+    return 0;
+}
