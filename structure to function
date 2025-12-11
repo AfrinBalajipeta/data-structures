@@ -1,0 +1,29 @@
+//wap to pass structure to function display employee details and address
+#include<stdio.h>
+struct employee
+{
+	char name[10];
+	int id;
+	char ph[11];
+    struct address
+{
+	char city[10];
+	int pin;
+	int dno;
+}d;
+}e;
+void display(employee);
+int main()
+{
+    printf("enter name,id,ph:");
+    scanf(" %s%d%s",&e.name,&e.id,&e.ph);
+    display(e);
+}
+void display(employee)
+{
+	printf("enter city,pin,dno:");
+	scanf(" %s%d%d",&e.d.city,&e.d.pin,&e.d.dno);
+	printf("\n employee data is:");
+    printf("Name: %s\n id:%d\n ph:%s",e.name,e.id,e.ph);
+	printf("city: %s\n pin:%d\n dno:%d",e.d.city,e.d.pin,e.d.dno);
+}
