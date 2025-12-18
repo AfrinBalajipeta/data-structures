@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+#define MOD 1000000007
+#define MAX_M 301
+#define MAX_D 101
+long long C[MAX_M][MAX_M];
+void precompute() {
+    for (int i = 0; i < MAX_M; i++) {
+        C[i][0] = 1;
+        for (int j = 1; j <= i; j++) {
+            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
+        }
+    }
+}
+void solve() {
+    int N, M;
+    scanf("%d %d", &N, &M);
+    int x[N], D[N];
+    for (int i = 0; i < N; i++) scanf("%d", &x[i]);
+    for (int i = 0; i < N; i++) scanf("%d", &D[i]);
+    long long dim_ways[10][MAX_M] = {0};
+    for (int i = 0; i < N; i++) {
+        long long dp[MAX_M][MAX_D] = {0};
+        dp[0][x[i]] = 1;
+        dim_ways[i][0] = 1;
+        for (int s = 1; s <= M; s++) {
+            for (int p = 1; p <= D[i]; p++) {
+                if (p > 1) dp[s][p] = (dp[s][p] + dp[s - 1][p - 1]) % MOD;
+                if (p < D[i]) dp[s][p] = (dp[s][p] + dp[s - 1][p + 1]) % MOD;
+                dim_ways[i][s] = (dim_ways[i][s] + dp[s][p]) % MOD;
+            }
+        }
+    }
+    long long current_combined[MAX_M] = {0};
+    // Initialize with the first dimension's results
+    for (int s = 0; s <= M; s++) current_combined[s] = dim_ways[0][s];
+    for (int i = 1; i < N; i++) {
+        long long next_combined[MAX_M] = {0};
+        for (int total_s = 0; total_s <= M; total_s++) {
+            for (int j = 0; j <= total_s; j++) {
+                long long ways = (current_combined[total_s - j] * dim_ways[i][j]) % MOD;
+                ways = (ways * C[total_s][j]) % MOD;
+                next_combined[total_s] = (next_combined[total_s] + ways) % MOD;
+            }
+        }
+        memcpy(current_combined, next_combined, sizeof(current_combined));
+    }
+    printf("%lld\n", current_combined[M]);
+}
+int main() {
+    precompute();
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        solve();
+    }
+    return 0;
+}
