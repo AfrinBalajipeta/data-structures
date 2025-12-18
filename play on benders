@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAXN 100005
+#define MAXM 1000005
+int head[MAXN], to[MAXM], next[MAXM], edge_count = 0;
+int grundy[MAXN];
+int visited[MAXN];
+void add_edge(int u, int v) {
+    to[++edge_count] = v;
+    next[edge_count] = head[u];
+    head[u] = edge_count;
+}
+int seen_at_pos[MAXM]; 
+int calculate_grundy(int u) {
+    if (visited[u]) return grundy[u];
+    for (int i = head[u]; i != 0; i = next[i]) {
+        calculate_grundy(to[i]);
+    }
+    for (int i = head[u]; i != 0; i = next[i]) {
+        seen_at_pos[grundy[to[i]]] = u;
+    }
+    int res = 0;
+    while (seen_at_pos[res] == u) {
+        res++;
+    }
+    grundy[u] = res;
+    visited[u] = 1;
+    return res;
+}
+int main() {
+    int N, M;
+    if (scanf("%d %d", &N, &M) != 2) return 0;
+    for (int i = 0; i < M; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        add_edge(u, v);
+    }
+    memset(visited, 0, sizeof(visited));
+    for (int i = 1; i <= N; i++) {
+        if (!visited[i]) {
+            calculate_grundy(i);
+        }
+    }
+    int Q;
+    scanf("%d", &Q);
+    while (Q--) {
+        int K;
+        scanf("%d", &K);
+        int xor_sum = 0;
+        for (int i = 0; i < K; i++) {
+            int pos;
+            scanf("%d", &pos);
+            xor_sum ^= grundy[pos];
+        }
+        if (xor_sum != 0) {
+            printf("Bumi\n");
+        } else {
+            printf("Iroh\n");
+        }
+    }
+    return 0;
+}
