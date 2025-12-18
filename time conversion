@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+void timeConversion(char* s) {
+    int hh, mm, ss;
+    char meridiem[3];
+    sscanf(s, "%2d:%2d:%2d%2s", &hh, &mm, &ss, meridiem);
+    if (strcmp(meridiem, "PM") == 0) {
+        if (hh != 12) {
+            hh += 12;
+        }
+    } else { 
+        if (hh == 12) {
+            hh = 0;
+        }
+    }
+    printf("%02d:%02d:%02d\n", hh, mm, ss);
+}
+int main() {
+    char s[11];
+    scanf("%s", s);
+    timeConversion(s);
+    return 0;
+}
